@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+
+{% block infobox%}
+<div class="infobox">
+    <div class="infoboxc">
+        <div class="infopicbox"><img class="posteri" src="{{ info.coverImage }}" alt="{{ info.name }}"></div>
+        <div class="infodesbox">
+            <div class="infodes">
+                <h1 style="margin:0;padding:0;font-size:19px;">{{ info.name }}</h1>
+            </div>
+            <div class="infodes2">
+                <p class="desc">{{ info.description }}</p>
+            </div>
+            <div class="infodes2">
+                <div class="textd">Genres/Tags:</div>
+                {% for genre in genres%}
+                <div class="textc"> <a class="infoan" href="/genres/{{genre.id_genre}}" title="">{{genre.id_genre}}</a>,
+                </div>
+                {%endfor%}
+                <div class="textd">Format:</div>
+                <div class="textc">{{info.format}}</div>
+                <div class="textd">Status:</div>
+                <div class="textc">{{ info.status }}</div>
+                <div class="textd">Episodes:</div>
+                <div class="textc">?</div>
+                <div class="textd">Year:</div>
+                <div class="textc">{{info.start_date}} to {{info.end_date}}</div>
+                <div class="textd">Score:</div>
+                <div class="textc">{{info.averageScore}}</div>
+                <div class="textd">Popularity:</div>
+                <div class="textc">{{info.popularity}}</div>
+                
+            </div>
+            <div class="cleft"></div>
+            <div class="shares">
+                <div class="textc">
+
+                </div>
+                <div class="textc">
+
+                </div>
+                <div class="textc">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cleft"></div>
+    <center style="background: #000;padding-top: 4px;">
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_728x90&amp;mob=false&amp;v=2035386684"
+            type="text/javascript"></script>
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=true&amp;v=971087489"
+            type="text/javascript"></script>
+    </center>
+    <div class="cleft"></div>
+    <div class="infoepboxmain">
+        <div class="infoepbox">
+            {%for episode in episodes%}
+            <a class="infovan" title="Episode {{episode.episode}}" href="/watch/{{info.slug}}-{{info.id}}-{{episode.episode}}">
+                <div class="infoepmain">
+                    <div class="infoep">
+                        <div class="infoept">
+                            <div class="infoept1">
+                                <div class="centerv">Episode</div>
+                            </div>
+                            <div class="infoept2">
+                                <div class="centerv">{{episode.episodeDisplay}}</div>
+                            </div>
+                            <!--
+                            <div class="infoept3">
+                                <div class="centerv">{{episode.posted_time}}</div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {%endfor%}
+        </div>
+    </div>
+    <div class="cleft"></div>
+    <div class="similars">Similar Shows</div>
+    <div class="similarboxmain">
+        <div class="similarbox">
+            <a class="an" title="ID:Invaded" href="https://animeheaven.ru/detail/id-invaded">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/imagesv2/2019/11/ID-Invaded.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/imagesv2/2019/11/ID-Invaded.jpg"
+                                alt="ID:Invaded">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">ID:Invaded</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Ragnarok (Dub)" href="https://animeheaven.ru/detail/ragnarok-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/4-30-2013/8078365452760.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/4-30-2013/8078365452760.jpg"
+                                alt="Ragnarok (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Ragnarok (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Island (Dub)" href="https://animeheaven.ru/detail/island-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/imagesv2/2018/07/Island-Dub.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/imagesv2/2018/07/Island-Dub.jpg"
+                                alt="Island (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Island (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Popotan (Dub)" href="https://animeheaven.ru/detail/popotan-dub.57597">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/12-27-2013/5903354534457l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/12-27-2013/5903354534457l.jpg"
+                                alt="Popotan (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Popotan (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Hal (Dub)" href="https://animeheaven.ru/detail/hal-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/12-23-2013/2414154546549l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/12-23-2013/2414154546549l.jpg"
+                                alt="Hal (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Hal (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="LaMB (Dub)" href="https://animeheaven.ru/detail/lamb-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/10-21-2014/8953655457249745.3.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/10-21-2014/8953655457249745.3.jpg"
+                                alt="LaMB (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">LaMB (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Blade (Dub)" href="https://animeheaven.ru/detail/blade-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/7-31-2013/50138654529742l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/7-31-2013/50138654529742l.jpg"
+                                alt="Blade (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Blade (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Steamboy (Dub)" href="https://animeheaven.ru/detail/steamboy-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/6-28-2013/75072754521278l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/6-28-2013/75072754521278l.jpg"
+                                alt="Steamboy (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Steamboy (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Outlanders (Dub)" href="https://animeheaven.ru/detail/outlanders-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/11-6-2013/90683154552830.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/11-6-2013/90683154552830.jpg"
+                                alt="Outlanders (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Outlanders (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Yumeria (Dub)" href="https://animeheaven.ru/detail/yumeria-dub.70699">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/7-8-2013/73979654516782l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/7-8-2013/73979654516782l.jpg"
+                                alt="Yumeria (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Yumeria (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Kakurenbo (Dub)" href="https://animeheaven.ru/detail/kakurenbo-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/1-8-2014/7590915453912l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/1-8-2014/7590915453912l.jpg"
+                                alt="Kakurenbo (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Kakurenbo (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Hanebado! (Dub)" href="https://animeheaven.ru/detail/hanebado-dub.93161">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/imagesv2/2018/07/Hanebado-Dub.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/imagesv2/2018/07/Hanebado-Dub.jpg"
+                                alt="Hanebado! (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Hanebado! (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Munto (Dub)" href="https://animeheaven.ru/detail/munto-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/4-10-2013/20967754524549.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/4-10-2013/20967754524549.jpg"
+                                alt="Munto (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Munto (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Betterman (Dub)" href="https://animeheaven.ru/detail/betterman-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/6-26-2013/9669825452868.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/6-26-2013/9669825452868.jpg"
+                                alt="Betterman (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Betterman (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Spriggan (Dub)" href="https://animeheaven.ru/detail/spriggan-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/3-4-2014/4990654582967.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/3-4-2014/4990654582967.jpg"
+                                alt="Spriggan (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Spriggan (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Revisions (Dub)" href="https://animeheaven.ru/detail/revisions-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/imagesv2/2019/05/Revisions-Dub.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/imagesv2/2019/05/Revisions-Dub.jpg"
+                                alt="Revisions (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Revisions (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Pretear (Dub)" href="https://animeheaven.ru/detail/pretear-dub.46310">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/1-23-2013/1921211411709.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/1-23-2013/1921211411709.jpg"
+                                alt="Pretear (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Pretear (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Canaan (Dub)" href="https://animeheaven.ru/detail/canaan-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/4-8-2013/40604254522655.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/4-8-2013/40604254522655.jpg"
+                                alt="Canaan (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Canaan (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="RahXephon (Dub)" href="https://animeheaven.ru/detail/rahxephon-dub.67990">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/12-29-2012/35574714165.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/12-29-2012/35574714165.jpg"
+                                alt="RahXephon (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">RahXephon (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a><a class="an" title="Planetes (Dub)" href="https://animeheaven.ru/detail/planetes-dub">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url(https://static.animecdn.xyz/media/uploads/12-11-2012/18376144822l.jpg);">
+                            <img class="coveri hd"
+                                src="https://static.animecdn.xyz/media/uploads/12-11-2012/18376144822l.jpg"
+                                alt="Planetes (Dub)">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">Planetes (Dub)</div>
+                        </div>
+                    </div>
+                </div>
+            </a> </div>
+    </div>
+</div>
+{% endblock %}

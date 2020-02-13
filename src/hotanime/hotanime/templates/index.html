@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block slider %}
+<div class="slider">
+    <div class="sliderpnbox">
+        <div class="sliderp" onclick="prewm()"></div>
+        <div class="slidern" onclick="nextm()"></div>
+    </div>
+    <div class="slidermain4" id="slide">
+        <div class="centerf">
+            <div class="centerf2">
+                <a class="an" href="https://animeheaven.ru/detail/black-clover-tv.28835" title="Black Clover (TV)"><img
+                        class="sliderimg" src="https://static.animecdn.xyz/static/images/black-clover.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/toaru-majutsu-no-index-iii-sub.69455"
+                    title="Toaru Majutsu no Index III (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2018/11/A-Certain-Magical-Index-3.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/yu-gi-oh-vrains.29507" title="YU-GI-OH! VRAINS"><img
+                        class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/05/yu-gi-oh-vrains-extra-cover-anime.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/dragon-ball-super-movie-broly-sub.73296"
+                    title="Dragon Ball Super Movie: Broly (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/05/dragon-ball-super-movie-broly-sub-extra-cover.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/tokyo-ghoul-re-2nd-season-sub.45618"
+                    title="Tokyo Ghoul:re 2nd Season (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/static/images/tokyo-ghoul-re-2nd-season.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/overlord-iii.24711" title="Overlord III (Sub)"><img
+                        class="sliderimg" src="https://static.animecdn.xyz/static/images/overlord-3rd-season.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/boku-no-hero-academia-4th-season-sub.91492"
+                    title="Boku no Hero Academia 4th Season (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/11/boku-no-hero-academia-4th-season-sub-extra-cover.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/tensei-shitara-slime-datta-ken-sub.58411"
+                    title="Tensei shitara Slime Datta Ken (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/static/images/that-time-i-got-reincarnated-as-a-slime.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/kimetsu-no-yaiba-sub.23142"
+                    title="Kimetsu no Yaiba (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/05/kimetsu-no-yaiba-sub-extra-cover-2.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/yakusoku-no-neverland.95153"
+                    title="Yakusoku no Neverland (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/02/That-Time-I-Got-Reincarnated-as-a-Slime.jpg"></a>
+                <a class="an"
+                    href="https://animeheaven.ru/detail/seishun-buta-yarou-wa-bunny-girl-senpai-no-yume-wo-minai-sub.36419"
+                    title="Seishun Buta Yarou wa Bunny Girl Senpai no Yume wo Minai (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2018/11/Rascal-Does-Not-Dream-of-Bunny-Girl-Senpai.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/radiant-sub" title="Radiant (Sub)"><img
+                        class="sliderimg" src="https://static.animecdn.xyz/media/imagesv2/2018/11/Radiant.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/goblin-slayer-sub.70190"
+                    title="Goblin Slayer (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/static/images/goblin-slayer.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/boruto-naruto-next-generations.84881"
+                    title="Boruto: Naruto Next Generations"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/05/boruto-naruto-next-generations-extra-cover.jpg"></a>
+                <a class="an" href="https://animeheaven.ru/detail/tejina-senpai-sub.70301"
+                    title="Tejina-senpai (Sub)"><img class="sliderimg"
+                        src="https://static.animecdn.xyz/media/imagesv2/2019/07/tejina-senpai-sub-extra-cover.png"></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block episodes%}
+<div class="iepbox">
+    <center style="background: #000;padding-top: 4px;">
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_728x90&amp;mob=false&amp;v=1037846455"
+            type="text/javascript"></script>
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=true&amp;v=1864043231"
+            type="text/javascript"></script>
+    </center>
+    <div class="clearfix"></div>
+    {%for episode in episodes%}
+    <div class="condm">
+        <a class="cona" href="https://animeheaven.ru/detail/kabukichou-sherlock-sub">{{episode.name}}</a>
+        <div class="con2m">Mystery, Comedy, Drama</div>
+    </div>
+    <div class="iep">
+        <div class="ieppic">
+            <a class="an thum" href="/detail/{{episode.name}}" style="background-image: url({{episode.coverImage}});">
+                <img class="coveri hd" src="{{episode.coverImage}}" alt="{{episode.name}}">
+            </a>
+        </div>
+        <div class="iepcon">
+            <div class="iepsbox">
+                <a href="/watch/kabukichou-sherlock-sub">
+                    <div class="ieps">
+                        <div class="ieps2">
+                            <div class="iepst1r">
+                                <div class="centerv">Episode</div>
+                            </div>
+                            <div class="iepst2r">
+                                <div class="centerv">
+                                    17
+                                </div>
+                            </div>
+                            <div class="iepst3r">
+                                <div class="centerv">45 mins ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="con">
+                <div class="condd">
+                    <a class="cona" href="/detail/{{episode.slug}}-{{episode.id_api}}">{{episode.name}}</a>
+                    <div class="con2">Mystery, Comedy, Drama</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+    <a class="morean" href="https://animeheaven.ru/latest-update">
+        <div class="more">Show More</div>
+    </a>
+</div>
+{% endblock %}
+
+
+
+
+
+{% block ongoing%}
+<div>
+    <center style="background: #000;padding-top: 4px;">
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=false&amp;v=437932773"
+            type="text/javascript"></script>
+    </center>
+</div>
+<div class="randombox">
+    <div class="c">
+        <a class="an thum" href="/detail/{{onGoing.0.slug}}-{{onGoing.0.id_api}}"
+            style="background-image: url({{onGoing.0.coverImage}})">
+            <img class="coveri hd" src="{{onGoing.0.coverImage}}" alt="{{episode.name}}">
+        </a>
+    </div>
+    <div class="rnd"><a href="/detail/{{onGoing.0.slug}}-{{onGoing.0.id_api}}">{{onGoing.0.0}}</a></div>
+
+</div>
+<div class="clearfix"></div>
+<div class="ongoingbox">
+    <div class="lisbox2">
+        <div class="c">
+            <div class="lisb"><a href="/ongoing">Ongoing anime</a></div>
+        </div>
+
+        {%for episode in onGoing%}
+        <a class="an" href="/detail/{{episode.slug}}-{{episode.id_api}}">
+            <div class="lis">{{episode.name}}</div>
+        </a>
+        {%endfor%}
+
+    </div>
+</div>
+{% endblock %}

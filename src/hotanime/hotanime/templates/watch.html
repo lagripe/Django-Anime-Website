@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block watchep%}
+<style>
+    #div_download_link {
+        width: 100%;
+    }
+
+    #divDownload {
+        font-size: 0;
+        text-align: center;
+        width: 100%;
+        float: left;
+        background: #222222;
+        padding: 10px 15px;
+    }
+
+    #divDownload a {
+        background: #e81e30 url('/static/css/cloud-computing.svg') no-repeat 10px center;
+        -webkit-background-size: 30px;
+        -moz-background-size: 30px;
+        -o-background-size: 30px;
+        background-size: 30px;
+        color: #FFF;
+        padding: 8px 15px 8px 45px;
+        display: inline-block;
+        font-size: 14px;
+        margin: 5px;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+    }
+
+    #divDownload a:hover {
+        background-color: #008a6b !important;
+    }
+
+    #info_player {
+        margin-bottom: 15px;
+    }
+
+    #info_player select {
+        background: #efefef;
+        padding: 6px 10px;
+        border: 1px solid #dddddd;
+        height: 31px;
+    }
+
+    #divAction a {
+        background: #e81e30;
+        width: 31px;
+        height: 31px;
+        float: left;
+        text-align: center;
+        position: relative;
+        margin-right: 15px;
+    }
+
+    #divAction a:last-child {
+        margin-right: 0;
+    }
+
+    #divAction a img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -10px;
+        margin-top: -10px;
+    }
+
+    #info_player>div {
+        margin-right: 13px;
+    }
+
+    #info_player>div:last-child {
+        margin-right: 0;
+    }
+
+    #info_player select:hover,
+    #info_player select:focus {
+        outline: none;
+    }
+
+    .keyword_text a {
+        font-size: 13px;
+    }
+
+    .keyword_text a:hover {
+        color: #e81e30;
+    }
+</style>
+<div class="now2">
+    <div class="c"><a class="infoan2" href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{anime_url.name}}</a> -
+        Episode {{episode.episodeDisplay}}</div>
+</div>
+<div class="cleft"></div>
+<div id="info_player" style="float:left;width:100%;text-align:center;">
+    <div style="display:inline-block;vertical-align:top;">
+        <select style="display:inline-block;" onchange="document.getElementById('player_id').src = this.value"
+            id="selectServer" atrl="SERVER1">
+            {%for server in episode.links%}
+            <option value="{{server.link}}" selected="">SERVER {{server.server}}</option>
+            {%endfor%}
+
+        </select>
+    </div>
+    <div style="display:none;vertical-align:top;" id="divQuality">
+        <select style="display:inline-block;" id="selectQuality" onchange="setNewUrl(this.value)"></select>
+    </div>
+    <div style="display:inline-block;vertical-align:top;" id="divAction">
+        {% if last is not none %}
+        <a href="/watch/{{anime_url.slug}}-{{anime_url.id}}-{{last}}" title="Last Episode"><img style="width:20px;"
+                src="{% static 'assets/css/back.svg' %}" alt="back"></a>
+
+        {%endif%}
+        <a href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}" title="List all episodes"><img style="width:20px;"
+                src="{% static 'assets/css/menu.svg' %}" alt="back"></a>
+
+        {% if next is not none %}
+        <a href="/watch/{{anime_url.slug}}-{{anime_url.id}}-{{next}}" title="Next Episode"><img style="width:20px;"
+                src="{% static 'assets/css/next.svg' %}" alt="back"></a>
+        {%endif%}
+    </div>
+</div>
+</div>
+<div class="cleft"></div>
+<center style="background: #121212;padding-top: 4px;">
+    <div style="display: inline-block; position: relative;">
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=false&amp;v=1174958853"
+            type="text/javascript"></script>
+    </div>
+    <div style="display: inline-block; position: relative;">
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=false&amp;v=1212434213"
+            type="text/javascript"></script>
+    </div>
+</center>
+
+<div class="cleft"></div>
+<div class="vid cssload-2x cssload-center" id="media-play" style="height:720px;"><iframe src="{{episode.links.2.link}}"
+        width="100%" height="100%" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+        allowtransparency="true" allowfullscreen="true"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" id="player_id"></iframe></div>
+<div class="cleft"></div>
+<div id="div_download_link"></div>
+<div class="cleft"></div>
+<div class="c">
+    <h1 class="watching-title"><strong>{{anime_url.name}} Episode {{episode.episodeDisplay}}</strong></h1>
+    <p class="keyword_text"><a href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{loweredName}}</a>, <a
+            href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">watch {{loweredName}}</a>, <a
+            href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{loweredName}} free</a>, <a
+            href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{loweredName}} masteranime</a>, <a
+            href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{loweredName}}</a>, <a
+            href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{loweredName}} hd</a>, <a
+            href="/detail/{{anime_url.slug}}-{{anime_url.id_api}}">{{loweredName}} hd online free</a></p>
+</div>
+
+
+<script>var ctk = 'a078f79285e2e9d1025a3ec176aa761d';</script>
+
+{%endblock%}
