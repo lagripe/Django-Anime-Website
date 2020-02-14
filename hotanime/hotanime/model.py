@@ -2,18 +2,12 @@ import mysql.connector
 from contextlib import contextmanager
 import sys
 from datetime import datetime
+from math import ceil
 class Engine():
-    '''
+    
     def __init__(self):
-        self.mydb = mysql.connector.connect(
-        host="localhost",
-        port="3306",
-        user="root",
-        passwd="",
-        database='anime_db'
-        )
-        print('connected mysql : {}'.format(self.mydb.is_connected()))
-    ''' 
+        self.ITEM_PER_PAGE = 30
+    
     @contextmanager
     def open_db_connection(self, commit=False):
         connection = mysql.connector.connect(
@@ -45,20 +39,10 @@ class Engine():
             cursor.execute('''SELECT * FROM animes
                                 '''.format(max=max))
             return cursor.fetchall()
-        ''' 
-        mycursor = self.mydb.cursor(dictionary=True)
-        mycursor.execute('SELECT name,id,coverImage,description FROM animes'.format(max=max))
-        return mycursor.fetchall()
-        '''
     def get_onGoing(self,max):
         with self.open_db_connection() as cursor:
             cursor.execute('SELECT * FROM animes  WHERE status = \'RELEASING\' ORDER BY averageScore LIMIT {max}'.format(max=max))
             return cursor.fetchall()
-        '''
-        mycursor = self.mydb.cursor(dictionary=True)
-        mycursor.execute('SELECT name,id,coverImage,description FROM animes  WHERE status = \'RELEASING\' ORDER BY popularity LIMIT {max}'.format(max=max))
-        return mycursor.fetchall()
-        '''
     def check_slug(self,slug):
         with self.open_db_connection() as mycursor:
             sg          = '-'.join(slug.split('-')[:-1])
@@ -118,4 +102,31 @@ class Engine():
                 response['next'] = index_next
                 response['loweredName'] = ' '.join(response['anime_url']['slug'].split('-'))
                 return response
-        
+    
+    def get_anime_list(self,page):
+        min = page * self.ITEM_PER_PAGE
+        max = min + self.ITEM_PER_PAGE
+        with self.open_db_connection() as mycursor:
+            mycursor.execute("SELECT * FROM animes order by start_date DESC LIMIT %s,%s",[min,max])
+            return mycursor.fetchall()
+    def get_total_pages(self):
+        with self.open_db_connection() as mycursor:
+            mycursor.execute("SELECT count(*) as count FROM animes ")
+            return ceil(mycursor.fetchone()['count'] / self.ITEM_PER_PAGE)
+    def get_header_title(self,path):
+        print(path)
+        title= ''
+        if path.__contains__('anime-list'):
+            title= 'Latest Anime 2020'
+        if path.__contains__('dubbed-anime'):
+            title= 'Latest English Dubbed Anime 2020'
+        if path.__contains__('anime-series'):
+            title= 'Watch Anime Series'
+        if path.__contains__('anime-movies'):
+            title= 'Watch Anime Movies'
+        if path.__contains__('ongoing'):
+            title= 'Ongoing Animes Series'
+        if path.__contains__('popular'):
+            title= 'Most Popular Animes 2020'
+        print(title)
+        return title

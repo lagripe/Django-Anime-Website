@@ -1,0 +1,59 @@
+{% extends "base.html"%}
+
+{% block title %}
+GlobalAnime - {{header}}
+{%endblock%}
+
+{% block animelist%}
+<div class="lisbox22">
+    <div class="block-header">
+        <h1 class="gh-title">{{header}}</h1>
+        <div class="cleft"></div>
+    </div>
+    <div class="cleft"></div>
+    <script type="text/javascript">
+        var order_by = 'latest';
+        $('.order').click(function () {
+            $('.order').removeClass('active');
+            $(this).addClass('active');
+            order_by = $(this).attr('data-order');
+        });
+    </script>
+    <div class="cleft"></div>
+    <div class="similarboxmain">
+        <div class="similarbox">
+            {%for anime in animes%}
+            <a class="an" title="{{anime.name}}" href="/detail/{{anime.slug}}-{{anime.id_api}}">
+                <div class="similarcmain">
+                    <div class="similarc">
+                        <div class="similarpic"
+                            style="background-image: url({{anime.coverImage}});">
+                            <img class="coveri hd"
+                                src="{{anime.coverImage}}"
+                                alt="{{anime.name}}">
+                        </div>
+                        <div class="similard">
+                            <div class="similardd">{{anime.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {%endfor%}
+        </div>
+    </div>
+    <div class="cleft"></div>
+    <div id="pagination">
+        <nav>
+            <ul class="pagination">
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="https://animeheaven.ru/anime-movies/2" data-ci-pagination-page="">2</a></li>
+                <li><a href="https://animeheaven.ru/anime-movies/3" data-ci-pagination-page="">3</a></li>
+                <li><a href="https://animeheaven.ru/anime-movies/50" data-ci-pagination-page="">50</a></li>
+                <li><a href="https://animeheaven.ru/anime-movies/2" data-ci-pagination-page="">Next →</a></li>
+                <li><a href="https://animeheaven.ru/anime-movies/50" data-ci-pagination-page="">Last &gt;&gt;</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="cleft"></div>
+</div>
+{%endblock%}

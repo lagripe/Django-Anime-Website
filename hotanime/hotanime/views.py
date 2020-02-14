@@ -7,7 +7,7 @@ engine = Engine()
 def index(request):
     episodes = engine.get_episode_homePage(max=40)
     ongoing = engine.get_onGoing(max=30)
-    return render(request, "index.html", {'episodes': episodes, 'onGoing': ongoing})
+    return render(request, "index.html", {'episodes': episodes, 'onGoing': ongoing,'header':'Watch Anime Online Free | globalanime.com'})
 
 
 def detail(request, slug):
@@ -41,3 +41,12 @@ def watch(request,episode):
                    'next':response['next'],
                    'loweredName':response['loweredName']
                    })
+
+def anime_list(request):
+    animes = engine.get_anime_list(page=0)
+    pages = engine.get_total_pages()
+    header = engine.get_header_title(request.META['PATH_INFO'])
+    print(header)
+    #return JsonResponse({'animes':animes,'pages':pages})
+    return render(request, "animelist.html", {'animes':animes,'pages':pages,'header':header})
+    

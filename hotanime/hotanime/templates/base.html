@@ -4,7 +4,10 @@
 
 <head>
 	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}" media="all" />
-	<title>GlobalAnime - Watch Anime Online Free | globalanime.com</title>
+	<title>
+		{%block title%}
+		{%endblock%}
+	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="robots" content="index,follow">
 	<meta name="referrer" content="always">
@@ -602,6 +605,9 @@
 	</script>
 	<div class="notmain">
 		<div class="maindark">
+			{%block animelist%}
+			
+			{%endblock%}
 			{%block watchep%}
 			
 			{%endblock%}
