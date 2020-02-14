@@ -48,7 +48,7 @@ def anime_list(request):
     header = engine.get_header_title(request.META['PATH_INFO'])
     print(header)
     #return JsonResponse({'animes':animes,'pages':pages})
-    return render(request, "animelist.html", {'animes':animes,'pages':pages,'header':header})
+    return render(request, "animelist.html", {'animes':animes,'totalPages':pages,'page':1,'next':2,'header':header})
 def anime_list_pagination(request,page):
     try:
         page = int(page)
@@ -57,5 +57,6 @@ def anime_list_pagination(request,page):
     animes = engine.get_anime_list(page=page)
     header = engine.get_header_title(request.META['PATH_INFO'])
     pages = engine.get_total_pages()
-    return render(request, "animelist.html", {'animes':animes,'pages':pages,'header':header,'page':page,'totalPages':pages})
+    print(pages)
+    return render(request, "animelist.html", {'animes':animes,'pages':pages,'header':header,'page':page,'next':page+1,'totalPages':pages})
     

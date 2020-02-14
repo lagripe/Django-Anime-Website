@@ -6,7 +6,7 @@ from math import ceil
 class Engine():
     
     def __init__(self):
-        self.ITEM_PER_PAGE = 30
+        self.ITEM_PER_PAGE = 10
     
     @contextmanager
     def open_db_connection(self, commit=False):

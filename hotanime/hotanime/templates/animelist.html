@@ -42,18 +42,11 @@ GlobalAnime - {{header}}
         </div>
     </div>
     <div class="cleft"></div>
-    <div id="pagination">
-        <nav>
-            <ul class="pagination">
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="https://animeheaven.ru/anime-movies/2" data-ci-pagination-page="">2</a></li>
-                <li><a href="https://animeheaven.ru/anime-movies/3" data-ci-pagination-page="">3</a></li>
-                <li><a href="https://animeheaven.ru/anime-movies/50" data-ci-pagination-page="">50</a></li>
-                <li><a href="https://animeheaven.ru/anime-movies/2" data-ci-pagination-page="">Next →</a></li>
-                <li><a href="https://animeheaven.ru/anime-movies/50" data-ci-pagination-page="">Last &gt;&gt;</a></li>
-            </ul>
-        </nav>
-    </div>
+    {%if page != totalPages%}
+    <a class="morean" href="/anime-list/{{next}}">
+        <div class="more">Show More</div>
+     </a>
+    {%endif%}
     <div class="cleft"></div>
 </div>
 {%endblock%}
