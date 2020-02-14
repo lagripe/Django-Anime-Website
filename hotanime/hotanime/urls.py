@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,re_path
-from .views import index,detail,watch,anime_list
+from .views import index,detail,watch,anime_list,anime_list_pagination
 urlpatterns = [
     path('', index),
     path('detail/<slug:slug>',detail),
     path('watch/<slug:episode>',watch),
     path(r'anime-list/',anime_list),
-    #path(r'anime-list/<int:paginate>',anime_list_pagination)
+    path(r'anime-list/<int:paginate>',anime_list_pagination)
 
 ]

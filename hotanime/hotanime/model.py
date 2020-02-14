@@ -109,6 +109,7 @@ class Engine():
         with self.open_db_connection() as mycursor:
             mycursor.execute("SELECT * FROM animes order by start_date DESC LIMIT %s,%s",[min,max])
             return mycursor.fetchall()
+    
     def get_total_pages(self):
         with self.open_db_connection() as mycursor:
             mycursor.execute("SELECT count(*) as count FROM animes ")
