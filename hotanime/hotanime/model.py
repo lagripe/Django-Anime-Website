@@ -6,7 +6,7 @@ from math import ceil
 class Engine():
     
     def __init__(self):
-        self.ITEM_PER_PAGE = 10
+        self.ITEM_PER_PAGE = 40
     
     @contextmanager
     def open_db_connection(self, commit=False):
@@ -104,30 +104,61 @@ class Engine():
                 return response
     
     def get_anime_list(self,page):
-        min = page * self.ITEM_PER_PAGE
-        max = min + self.ITEM_PER_PAGE
+        if page > 0:
+            page -= 1
+        offset = page * self.ITEM_PER_PAGE
         with self.open_db_connection() as mycursor:
-            mycursor.execute("SELECT * FROM animes order by start_date DESC LIMIT %s,%s",[min,max])
+            mycursor.execute("SELECT * FROM animes order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
+            print('--------------- {}'.format(mycursor._executed))
+            return mycursor.fetchall()
+        
+        
+    def get_dubbed_anime(self,page):
+        if page > 0:
+            page -= 1
+        offset = page * self.ITEM_PER_PAGE
+        with self.open_db_connection() as mycursor:
+            mycursor.execute("SELECT * FROM animes WHERE name LIKE '%(Dub)' order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
+            print('--------------- {}'.format(mycursor._executed))
             return mycursor.fetchall()
     
-    def get_total_pages(self):
+    def get_tvs(self,page):
+        if page > 0:
+            page -= 1
+        offset = page * self.ITEM_PER_PAGE
         with self.open_db_connection() as mycursor:
-            mycursor.execute("SELECT count(*) as count FROM animes ")
+            mycursor.execute("SELECT * FROM animes WHERE format = 'TV' or format = 'TV_SHORT' order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
+            print('--------------- {}'.format(mycursor._executed))
+            return mycursor.fetchall()
+    '''
+    def get_ongoing(self,page):
+        if page > 0:
+            page -= 1
+        offset = page * self.ITEM_PER_PAGE
+        with self.open_db_connection() as mycursor:
+            mycursor.execute("SELECT * FROM animes  WHERE status = \'RELEASING\' order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
+            print('--------------- {}'.format(mycursor._executed))
+            return mycursor.fetchall()
+    '''
+    def get_popular(self,page):
+        if page > 0:
+            page -= 1
+        offset = page * self.ITEM_PER_PAGE
+        with self.open_db_connection() as mycursor:
+            mycursor.execute("SELECT * FROM animes order by popularity DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
+            print('--------------- {}'.format(mycursor._executed))
+            return mycursor.fetchall()   
+        
+    def get_total_pages(self,type):
+        with self.open_db_connection() as mycursor:
+            if type == 'animes':
+                mycursor.execute("SELECT count(*) as count FROM animes ")
+            elif type == 'dubbed':
+                mycursor.execute("SELECT count(*) as count FROM animes WHERE name LIKE '%(Dub)'")
+            elif type == 'tv':
+                mycursor.execute("SELECT count(*) as count FROM animes WHERE format = 'TV' or format = 'TV_SHORT'")
+            elif type == 'popular':
+                mycursor.execute("SELECT count(*) as count FROM animes")
+                
             return ceil(mycursor.fetchone()['count'] / self.ITEM_PER_PAGE)
-    def get_header_title(self,path):
-        print(path)
-        title= ''
-        if path.__contains__('anime-list'):
-            title= 'Latest Anime 2020'
-        if path.__contains__('dubbed-anime'):
-            title= 'Latest English Dubbed Anime 2020'
-        if path.__contains__('anime-series'):
-            title= 'Watch Anime Series'
-        if path.__contains__('anime-movies'):
-            title= 'Watch Anime Movies'
-        if path.__contains__('ongoing'):
-            title= 'Ongoing Animes Series'
-        if path.__contains__('popular'):
-            title= 'Most Popular Animes 2020'
-        print(title)
-        return title
+        

@@ -43,10 +43,44 @@ GlobalAnime - {{header}}
     </div>
     <div class="cleft"></div>
     {%if page != totalPages%}
-    <a class="morean" href="/anime-list/{{next}}">
+    <a class="morean" href="/{{path}}/{{next}}">
         <div class="more">Show More</div>
      </a>
     {%endif%}
     <div class="cleft"></div>
 </div>
 {%endblock%}
+
+{% block ongoing%}
+<div>
+    <center style="background: #000;padding-top: 4px;">
+        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=false&amp;v=437932773"
+            type="text/javascript"></script>
+    </center>
+</div>
+<div class="randombox">
+    <div class="c">
+        <a class="an thum" href="/detail/{{onGoing.0.slug}}-{{onGoing.0.id_api}}"
+            style="background-image: url({{onGoing.0.coverImage}})">
+            <img class="coveri hd" src="{{onGoing.0.coverImage}}" alt="{{episode.name}}">
+        </a>
+    </div>
+    <div class="rnd"><a href="/detail/{{onGoing.0.slug}}-{{onGoing.0.id_api}}">{{onGoing.0.0}}</a></div>
+
+</div>
+<div class="clearfix"></div>
+<div class="ongoingbox">
+    <div class="lisbox2">
+        <div class="c">
+            <div class="lisb"><a href="/ongoing">Ongoing anime</a></div>
+        </div>
+
+        {%for episode in onGoing%}
+        <a class="an" href="/detail/{{episode.slug}}-{{episode.id_api}}">
+            <div class="lis">{{episode.name}}</div>
+        </a>
+        {%endfor%}
+
+    </div>
+</div>
+{% endblock %}

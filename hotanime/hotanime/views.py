@@ -43,20 +43,80 @@ def watch(request,episode):
                    })
 
 def anime_list(request):
-    animes = engine.get_anime_list(page=0)
-    pages = engine.get_total_pages()
-    header = engine.get_header_title(request.META['PATH_INFO'])
-    print(header)
+    path = ''
+    if request.META['PATH_INFO'].__contains__('anime-list'):
+        animes = engine.get_anime_list(page=0)
+        pages = engine.get_total_pages(type='animes')
+        path = 'anime-list'
+        header= 'Latest Anime 2020'
+        
+    if request.META['PATH_INFO'].__contains__('dubbed-anime'):
+        animes = engine.get_dubbed_anime(page=0)
+        pages = engine.get_total_pages(type='dubbed')
+        path = 'dubbed-anime'
+        header= 'Latest English Dubbed Anime 2020'
+        
+    if request.META['PATH_INFO'].__contains__('anime-series'):
+        animes = engine.get_tvs(page=0)
+        pages = engine.get_total_pages(type='tv')
+        path = 'anime-series'
+        header= 'Watch Anime Series'
+        
+    if request.META['PATH_INFO'].__contains__('anime-movies'):
+        header= 'Watch Anime Movies'
+    if request.META['PATH_INFO'].__contains__('popular'):
+        animes = engine.get_popular(page=0)
+        pages = engine.get_total_pages(type='popular')
+        path = 'popular'
+        header= 'Most Popular Animes 2020' 
+    ongoing = engine.get_onGoing(max=30)
     #return JsonResponse({'animes':animes,'pages':pages})
-    return render(request, "animelist.html", {'animes':animes,'totalPages':pages,'page':1,'next':2,'header':header})
+    return render(request, "animelist.html", {'animes':animes,
+                                              'totalPages':pages,
+                                              'page':1,'next':2,
+                                              'header':header,
+                                              'onGoing':ongoing,
+                                              'path':path})
 def anime_list_pagination(request,page):
     try:
         page = int(page)
     except:
         pass
-    animes = engine.get_anime_list(page=page)
-    header = engine.get_header_title(request.META['PATH_INFO'])
-    pages = engine.get_total_pages()
-    print(pages)
-    return render(request, "animelist.html", {'animes':animes,'pages':pages,'header':header,'page':page,'next':page+1,'totalPages':pages})
+    if request.META['PATH_INFO'].__contains__('anime-list'):
+        animes = engine.get_anime_list(page=page)
+        pages = engine.get_total_pages(type='animes')
+        path = 'anime-list'
+        header= 'Latest Anime 2020'
+    elif request.META['PATH_INFO'].__contains__('dubbed-anime'):
+        animes = engine.get_dubbed_anime(page=page)
+        pages = engine.get_total_pages(type='dubbed')
+        path = 'dubbed-anime'
+        header= 'Latest English Dubbed Anime 2020'
+    elif request.META['PATH_INFO'].__contains__('anime-series'):
+        animes = engine.get_tvs(page=page)
+        pages = engine.get_total_pages(type='tv')
+        path = 'anime-series'
+        header= 'Watch Anime Series'
+    elif request.META['PATH_INFO'].__contains__('anime-movies'):
+        header= 'Watch Anime Movies'
+        '''
+    elif request.META['PATH_INFO'].__contains__('ongoing'):
+        animes = engine.get_ongoing(page=page)
+        pages = engine.get_total_pages(type='ongoing')
+        path = 'ongoing'
+        header= 'Ongoing Animes Series'
+        '''
+    elif request.META['PATH_INFO'].__contains__('popular'):
+        animes = engine.get_popular(page=page)
+        pages = engine.get_total_pages(type='popular')
+        path = 'popular'
+        header= 'Most Popular Animes 2020'
     
+    ongoing = engine.get_onGoing(max=30)
+    return render(request, "animelist.html", {'animes':animes,
+                                              'pages':pages,
+                                              'header':header,
+                                              'page':page,'next':page+1,
+                                              'totalPages':pages,
+                                              'onGoing':ongoing,
+                                              'path':path})

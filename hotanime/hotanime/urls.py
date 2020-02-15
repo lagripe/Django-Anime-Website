@@ -21,6 +21,11 @@ urlpatterns = [
     path('detail/<slug:slug>',detail),
     path('watch/<slug:episode>',watch),
     path('anime-list/',anime_list),
-    path('anime-list/<int:page>',anime_list_pagination)
-
+    path('anime-list/<int:page>',anime_list_pagination),
+    path('dubbed-anime/',anime_list),
+    path('dubbed-anime/<int:page>',anime_list_pagination),
+    path('anime-series/',anime_list),
+    path('anime-series/<int:page>',anime_list_pagination),
+    path('popular/',anime_list),
+    path('popular/<int:page>',anime_list_pagination)
 ]
