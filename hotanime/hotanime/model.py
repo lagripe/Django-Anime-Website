@@ -36,9 +36,17 @@ class Engine():
             
     def get_episode_homePage(self,max):
         with self.open_db_connection() as cursor:
-            cursor.execute('''SELECT * FROM animes
-                                '''.format(max=max))
-            return cursor.fetchall()
+            # DB View : get_latest_episodes
+            cursor.execute("select * from get_latest_episodes LIMIT %s",[max])
+            episodes = self.concatenate_genres(cursor.fetchall())
+            return episodes
+    def concatenate_genres(self,episodes): 
+        with self.open_db_connection() as cursor:
+            for episode in episodes:
+                cursor.execute("SELECT * from anime_genre where id_anime = %s",[episode['id']])
+                episode['genres'] = ','.join([genre['id_genre'] for genre in cursor.fetchall()])
+        return episodes
+            
     def get_onGoing(self,max):
         with self.open_db_connection() as cursor:
             cursor.execute('SELECT * FROM animes  WHERE status = \'RELEASING\' ORDER BY averageScore LIMIT {max}'.format(max=max))

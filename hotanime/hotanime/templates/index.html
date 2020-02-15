@@ -64,27 +64,21 @@ GlobalAnime - {{header}}
 
 {% block episodes%}
 <div class="iepbox">
-    <center style="background: #000;padding-top: 4px;">
-        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_728x90&amp;mob=false&amp;v=1037846455"
-            type="text/javascript"></script>
-        <script src="//s.dolphincdn.xyz/script.php?id=AD_ANIMEHEAVEN_300x250&amp;mob=true&amp;v=1864043231"
-            type="text/javascript"></script>
-    </center>
     <div class="clearfix"></div>
     {%for episode in episodes%}
     <div class="condm">
-        <a class="cona" href="https://animeheaven.ru/detail/kabukichou-sherlock-sub">{{episode.name}}</a>
-        <div class="con2m">Mystery, Comedy, Drama</div>
+        <a class="cona" href="/watch/{{episode.slug}}-{{episode.id}}-{{episode.episode}}">{{episode.name}}</a>
+        <div class="con2m">{{episode.genres}}</div>
     </div>
     <div class="iep">
         <div class="ieppic">
-            <a class="an thum" href="/detail/{{episode.name}}" style="background-image: url({{episode.coverImage}});">
+            <a class="an thum" href="/detail/{{episode.slug}}-{{episode.id_api}}" style="background-image: url({{episode.coverImage}});">
                 <img class="coveri hd" src="{{episode.coverImage}}" alt="{{episode.name}}">
             </a>
         </div>
         <div class="iepcon">
             <div class="iepsbox">
-                <a href="/watch/kabukichou-sherlock-sub">
+                <a href="/watch/{{episode.slug}}-{{episode.id}}-{{episode.episode}}">
                     <div class="ieps">
                         <div class="ieps2">
                             <div class="iepst1r">
@@ -92,11 +86,8 @@ GlobalAnime - {{header}}
                             </div>
                             <div class="iepst2r">
                                 <div class="centerv">
-                                    17
+                                    {{episode.index_ep}}
                                 </div>
-                            </div>
-                            <div class="iepst3r">
-                                <div class="centerv">45 mins ago</div>
                             </div>
                         </div>
                     </div>
@@ -105,7 +96,7 @@ GlobalAnime - {{header}}
             <div class="con">
                 <div class="condd">
                     <a class="cona" href="/detail/{{episode.slug}}-{{episode.id_api}}">{{episode.name}}</a>
-                    <div class="con2">Mystery, Comedy, Drama</div>
+                    <div class="con2">{{episode.genres}}</div>
                 </div>
             </div>
         </div>
