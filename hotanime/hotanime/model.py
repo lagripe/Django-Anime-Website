@@ -3,6 +3,7 @@ from contextlib import contextmanager
 import sys
 from datetime import datetime
 from math import ceil
+from fuzzywuzzy import fuzz
 class Engine():
     
     def __init__(self):
@@ -44,7 +45,7 @@ class Engine():
         with self.open_db_connection() as cursor:
             for episode in episodes:
                 cursor.execute("SELECT * from anime_genre where id_anime = %s",[episode['id']])
-                episode['genres'] = ','.join([genre['id_genre'] for genre in cursor.fetchall()])
+                episode['genres'] = ', '.join([genre['id_genre'] for genre in cursor.fetchall()])
         return episodes
             
     def get_onGoing(self,max):
