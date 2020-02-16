@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 from math import ceil
 from fuzzywuzzy import fuzz
+from random import Random
 class Engine():
     
     def __init__(self):
@@ -170,4 +171,11 @@ class Engine():
                 mycursor.execute("SELECT count(*) as count FROM animes")
                 
             return ceil(mycursor.fetchone()['count'] / self.ITEM_PER_PAGE)
-        
+
+    def get_random(self):
+        rd = Random()
+        with self.open_db_connection() as cursor:
+            cursor.execute("SELECT id_api,slug from animes")
+            animes = cursor.fetchall()
+            return animes[rd.randint(0,len(animes)-1)]
+            

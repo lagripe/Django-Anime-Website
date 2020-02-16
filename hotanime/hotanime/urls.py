@@ -27,5 +27,6 @@ urlpatterns = [
     path('anime-series/',anime_list),
     path('anime-series/<int:page>',anime_list_pagination),
     path('popular/',anime_list),
-    path('popular/<int:page>',anime_list_pagination)
+    path('popular/<int:page>',anime_list_pagination),
+    path('random/',random)
 ]

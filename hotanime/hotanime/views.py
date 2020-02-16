@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .model import Engine
 engine = Engine()
 
@@ -29,6 +29,8 @@ def detail(request, slug):
             episode['episodeDisplay'] = int(episode['episode'])
         except:
             episode['episodeDisplay'] = episode['episode']
+        
+    # GET SIMILAR ANIMES
     return render(request, "detail.html", {'info': response['info'], 'episodes': response['episodes'][::-1], 'genres': response['genres']})
 
 def watch(request,episode):
@@ -120,3 +122,8 @@ def anime_list_pagination(request,page):
                                               'totalPages':pages,
                                               'onGoing':ongoing,
                                               'path':path})
+
+def random(request):
+    anime = engine.get_random()
+    # Redirection 
+    return redirect("/detail/{}".format('-'.join([anime['slug'],anime['id_api']])))
