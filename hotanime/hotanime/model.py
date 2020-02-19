@@ -74,47 +74,41 @@ class Engine():
                 mycursor.execute("SELECT id_genre FROM anime_genre WHERE id_anime = %s ",[row['id']])
                 response['genres'] = mycursor.fetchall()
                 return response
-    def get_episode_servers(self,episode_slug):
-        splits      =   episode_slug.split('-')
-        if len(splits) < 3:
-            return {}
-        else:
-            episode     =   splits[-1]
-            id_anime    =   splits[-2]
+    def get_episode_servers(self,episode):
+
             #sg      = '-'.join(splits[:-])
-            print(episode)
-            print(id_anime)
-            with self.open_db_connection() as mycursor:
-                response                =   {}
-                # get episode
-                mycursor.execute("SELECT * FROM episodes WHERE id_anime = %s AND episode = %s",[id_anime,episode])
-                response['episode']     =   mycursor.fetchone()
-                response['episode']['links'] = [{'server':i+1,'link':link} for i,link in enumerate(response['episode']['links'].split('|'))]
-                try:
-                    response['episode']['episodeDisplay'] = int(response['episode']['episode'])
-                except:
-                    response['episode']['episodeDisplay'] = response['episode']['episode']
-                current_index           =   response['episode']['index_ep']
-                # get anime url
-                mycursor.execute("SELECT id_api,slug,name,id FROM animes WHERE id = %s",[id_anime])
-                response['anime_url']  = mycursor.fetchone()
-                index_last,index_next = (None,None)
-                # get last episode
-                if current_index > 1:
-                    mycursor.execute("SELECT episode FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index - 1,id_anime])
-                    index_last = mycursor.fetchone()['episode']
-                # get next episode
-                mycursor.execute("SELECT episode FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index + 1,id_anime])
-                #print(mycursor.fetchone())
-                #print('-----------{}'.format(rowscount))
-                rows = mycursor.fetchall()
-                if len(rows) >= 1:
-                    index_next = rows[0]['episode']
-                response['last'] = index_last
-                response['next'] = index_next
-                response['loweredName'] = ' '.join(response['anime_url']['slug'].split('-'))
-                return response
-    
+        with self.open_db_connection() as mycursor:
+            response                =   {}
+            # get episode
+            mycursor.execute("SELECT * FROM episodes WHERE id = %s",[episode])
+            response['episode']     =   mycursor.fetchone()
+            response['episode']['links'] = [{'server':i+1,'link':link} for i,link in enumerate(response['episode']['links'].split('|'))]
+            try:
+                response['episode']['episodeDisplay'] = int(response['episode']['episode'])
+            except:
+                response['episode']['episodeDisplay'] = response['episode']['episode']
+            current_index           =   response['episode']['index_ep']
+            # get anime url
+            id_anime = response['episode']['id_anime']
+            mycursor.execute("SELECT id_api,slug,name,id FROM animes WHERE id = %s",[id_anime])
+            response['anime_url']  = mycursor.fetchone()
+            index_last,index_next = (None,None)
+            # get last episode
+            if current_index > 1:
+                mycursor.execute("SELECT episode FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index - 1,id_anime])
+                index_last = mycursor.fetchone()['episode']
+            # get next episode
+            mycursor.execute("SELECT episode FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index + 1,id_anime])
+            #print(mycursor.fetchone())
+            #print('-----------{}'.format(rowscount))
+            rows = mycursor.fetchall()
+            if len(rows) >= 1:
+                index_next = rows[0]['episode']
+            response['last'] = index_last
+            response['next'] = index_next
+            response['loweredName'] = ' '.join(response['anime_url']['slug'].split('-'))
+            return response
+
     def get_anime_list(self,page):
         if page > 0:
             page -= 1

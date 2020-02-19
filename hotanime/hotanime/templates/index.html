@@ -67,7 +67,7 @@ GlobalAnime - {{header}}
     <div class="clearfix"></div>
     {%for episode in episodes%}
     <div class="condm">
-        <a class="cona" href="/watch/{{episode.slug}}-{{episode.id}}-{{episode.episode}}">{{episode.name}}</a>
+        <a class="cona" href="/watch/{{episode.id_episode}}">{{episode.name}}</a>
         <div class="con2m">{{episode.genres}}</div>
     </div>
     <div class="iep">
@@ -78,7 +78,7 @@ GlobalAnime - {{header}}
         </div>
         <div class="iepcon">
             <div class="iepsbox">
-                <a href="/watch/{{episode.slug}}-{{episode.id}}-{{episode.episode}}">
+                <a href="/watch/{{episode.id_episode}}">
                     <div class="ieps">
                         <div class="ieps2">
                             <div class="iepst1r">

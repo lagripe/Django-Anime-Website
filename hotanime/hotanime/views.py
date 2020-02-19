@@ -6,6 +6,7 @@ engine = Engine()
 
 def index(request):
     episodes = engine.get_episode_homePage(max=40)
+    print(episodes)
     ongoing = engine.get_onGoing(max=30)
     return render(request, "index.html", {'episodes': episodes, 'onGoing': ongoing,'header':'Watch Anime Online Free | globalanime.com'})
 
@@ -38,15 +39,24 @@ def detail(request, slug):
                                            'similar':similar})
 
 def watch(request,episode):
-    response = engine.get_episode_servers(episode)
-    #return JsonResponse(response)
-    return render(request, "watch.html",
-                  {'episode': response['episode'],
-                   'anime_url':response['anime_url'],
-                   'last':response['last'],
-                   'next':response['next'],
-                   'loweredName':response['loweredName']
-                   })
+    try:
+        print(episode)
+        episode = int(episode)
+        print(episode)
+        response = engine.get_episode_servers(episode)
+        print('----------')
+        print(response)
+        #return JsonResponse(response)
+        return render(request, "watch.html",
+                    {'episode': response['episode'],
+                    'anime_url':response['anime_url'],
+                    'last':response['last'],
+                    'next':response['next'],
+                    'loweredName':response['loweredName']
+                    })
+    except:
+        return HttpResponse(content="")
+    
 
 def anime_list(request):
     path = ''

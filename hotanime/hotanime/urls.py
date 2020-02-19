@@ -19,7 +19,7 @@ from .views import *
 urlpatterns = [
     path('', index),
     path('detail/<slug:slug>',detail),
-    path('watch/<slug:episode>',watch),
+    path('watch/<int:episode>',watch),
     path('anime-list/',anime_list),
     path('anime-list/<int:page>',anime_list_pagination),
     path('dubbed-anime/',anime_list),
