@@ -31,7 +31,11 @@ def detail(request, slug):
             episode['episodeDisplay'] = episode['episode']
         
     # GET SIMILAR ANIMES
-    return render(request, "detail.html", {'info': response['info'], 'episodes': response['episodes'][::-1], 'genres': response['genres']})
+    similar = engine.get_similar_animes(response['info']['slug'],response['info']['id'],response['genres'])
+    return render(request, "detail.html", {'info': response['info'],
+                                           'episodes': response['episodes'][::-1],
+                                           'genres': response['genres'],
+                                           'similar':similar})
 
 def watch(request,episode):
     response = engine.get_episode_servers(episode)

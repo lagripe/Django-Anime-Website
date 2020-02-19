@@ -9,7 +9,9 @@ class Engine():
     
     def __init__(self):
         self.ITEM_PER_PAGE = 40
-    
+        self.SIMILAR_PER_PAGE = 20
+        self.SEARCH_ITEMS = 10
+        self.stop_words = ['dub','movie','anime','the','season','1st','3rd','2nd','4th','5th','sub','movie:','first','second','third','fourth'] 
     @contextmanager
     def open_db_connection(self, commit=False):
         connection = mysql.connector.connect(
@@ -175,7 +177,33 @@ class Engine():
     def get_random(self):
         rd = Random()
         with self.open_db_connection() as cursor:
-            cursor.execute("SELECT id_api,slug from animes")
+            cursor.execute("SELECT id_api,slug FROM animes")
             animes = cursor.fetchall()
             return animes[rd.randint(0,len(animes)-1)]
-            
+    def get_similar_animes(self,slug,id,genres):
+        slug = ' '.join([word for word in slug.split('-') if word not in self.stop_words])
+        with self.open_db_connection() as cursor:
+            genre_condition = ["id_genre = '{}'".format(genre['id_genre']) for genre in genres]
+            cursor.execute("SELECT id, slug FROM animes,anime_genre WHERE id != %s and id = id_anime and ({}) ".format(' OR '.join(genre_condition)),[id])
+            print(cursor._executed)
+            animes = cursor.fetchall()
+            if (len(animes) == 0):
+                return []
+            scores = [{'id':anime['id'],
+                       'score':fuzz.ratio(slug,' '.join([word for word in anime['slug'].split('-') if word not in self.stop_words]))}
+                            for anime in animes]
+            ids = ['\''+anime['id']+'\'' for anime in sorted(scores,key=lambda i:i['score'],reverse=True)[:self.SIMILAR_PER_PAGE]]
+            cursor.execute("SELECT name,slug,id_api,coverImage FROM animes WHERE id in ({})".format(','.join(ids)))
+            return cursor.fetchall()
+    def search(self,keyword):
+        
+        keyword = ' '.join([word for word in keyword.lower().split('-') if word not in self.stop_words])
+        with self.open_db_connection() as cursor:
+            cursor.execute("SELECT id, slug FROM animes")
+            animes = cursor.fetchall()
+            scores = [{'id':anime['id'],
+                       'score':fuzz.ratio(keyword,' '.join([word for word in anime['slug'].split('-') if word not in self.stop_words]))}
+                            for anime in animes]
+            ids = ['\''+anime['id']+'\'' for anime in sorted(scores,key=lambda i:i['score'],reverse=True)[:self.SEARCH_ITEMS]]
+            cursor.execute("SELECT name,slug,id_api,coverImage FROM animes WHERE id in ({})".format(','.join(ids)))
+            return cursor.fetchall()
