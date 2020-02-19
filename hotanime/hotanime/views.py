@@ -40,12 +40,8 @@ def detail(request, slug):
 
 def watch(request,episode):
     try:
-        print(episode)
         episode = int(episode)
-        print(episode)
         response = engine.get_episode_servers(episode)
-        print('----------')
-        print(response)
         #return JsonResponse(response)
         return render(request, "watch.html",
                     {'episode': response['episode'],
