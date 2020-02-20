@@ -1,12 +1,13 @@
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,render_to_response
+from django.template.context_processors import csrf
+
 from .model import Engine
 engine = Engine()
 
 
 def index(request):
     episodes = engine.get_episode_homePage(max=40)
-    print(episodes)
     ongoing = engine.get_onGoing(max=30)
     return render(request, "index.html", {'episodes': episodes, 'onGoing': ongoing,'header':'Watch Anime Online Free | globalanime.com'})
 
@@ -137,3 +138,14 @@ def random(request):
     anime = engine.get_random()
     # Redirection 
     return redirect("/detail/{}".format('-'.join([anime['slug'],anime['id_api']])))
+
+def search(request):
+    results = []
+    context = {}
+    context.update(csrf(request))
+    if request.method == "POST" and request.POST['keyword'] != None and request.POST['keyword'].strip() != '':
+        context['results'] = engine.search(keyword=request.POST['keyword'])
+    else:
+        pass
+    #print(context['results'])
+    return render(request,"search_response.html",context)

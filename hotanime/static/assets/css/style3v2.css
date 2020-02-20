@@ -785,12 +785,9 @@ overflow:hidden;
 body
 {
 	margin: 0px;
-    #background-image: url(
+    background-image: url(
 	line.png);
-    #background-repeat: repeat-x
-    #background-position: left
-	top;
-	/* background-image: url(ah-wp-1080.jpg); */ */
+    background-repeat: repeat-x;
 	background-position: bottom;
 }
 a{
@@ -920,11 +917,14 @@ margin:0px;
 border:0px;
 margin-top:12px;
 margin-right: 10px;
+
 }
+
+
 .searchform
 {
     width: 517px;
-    height: 40px
+    height: 40px;
     padding: 0px;
     margin: 0px;
     border: 0px;
@@ -2312,6 +2312,7 @@ padding-left: 10px;
 .searchform {
     width: 200px;
 }
+
 .searchinput {
     width: 140px;
     margin-left: 20px;
@@ -3276,6 +3277,7 @@ button:focus, button:active {
     font-style: normal;
     color: #e81e30;
 }
+
 @media screen and (min-width: 1600px) {
     #media-play {
         min-height: 675px;
@@ -3347,4 +3349,9 @@ button:focus, button:active {
 #media-play, #media-play iframe, #media-play video, .ipplayerjs-container, .ipplayerjs-layer {
     height: 200px!important;
 }
+}
+
+.searcha {
+    text-decoration: none !important;
+    color: #e81e30;
 }

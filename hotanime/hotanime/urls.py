@@ -28,5 +28,6 @@ urlpatterns = [
     path('anime-series/<int:page>',anime_list_pagination),
     path('popular/',anime_list),
     path('popular/<int:page>',anime_list_pagination),
-    path('random/',random)
+    path('random/',random),
+    path('api/search/',search)
 ]

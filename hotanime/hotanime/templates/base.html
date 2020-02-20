@@ -428,15 +428,53 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
+	<script>
+		$(document).ready(function () {
+			$.ajaxSetup({ cache: false });
+			$('#search').keyup(function () {
+				console.log('search started')
+				$('#results').html('');
+				var searchField = $('#search').val();
+				if (searchField.length <= 3) { return; }
+				console.log({
+					'keyword': searchField,
+					'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+				})
+				$.ajax({
+					type: "POST",
+					url: "/api/search/",
+					data: {
+						'keyword': searchField,
+						'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+					},
+					dataType: 'html',
+					success: succ
+				});
+
+			});
+			function succ(data, textStatus, jqXHR) {
+				console.log(data)
+				$('#results').html(data)
+			}
+			
+
+		});
+	</script>
 	<div class="header">
 		<div class="headermain">
 			<a href="/">
 				<div class="logo"></div>
 			</a>
-			<div class="searchbox">
+			<div class="searchbox" style="position:relative;z-index:100000" >
 				<form class="searchform" action="/search" method="get">
-					<input class="searchinput" name="q" maxlength="100" placeholder="Search" value="">
-					<input class="searchsubmit" type="submit" value=""></form>
+					{% csrf_token %}
+					<input class="searchinput" name="q" maxlength="100" placeholder="Search" value="" id="search">
+					<input class="searchsubmit" type="submit" value="">
+					<ul id="results" class="results">
+
+					</ul>
+				</form>
+
 			</div>
 			<div class="bwbox" id="bbox" onclick="makebw()">
 				<div class="bwselect" id="bwsel"></div>
@@ -596,10 +634,10 @@
 	<div class="notmain">
 		<div class="maindark">
 			{%block animelist%}
-			
+
 			{%endblock%}
 			{%block watchep%}
-			
+
 			{%endblock%}
 			<!-- Latest EPS-->
 			{% block episodes %}
