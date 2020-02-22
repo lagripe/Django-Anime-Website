@@ -42,7 +42,7 @@ GlobalAnime - {{header}}
         </div>
     </div>
     <div class="cleft"></div>
-    {%if page != totalPages%}
+    {%if page < totalPages%}
     <a class="morean" href="/{{path}}/{{next}}">
         <div class="more">Show More</div>
      </a>

@@ -432,7 +432,6 @@
 		$(document).ready(function () {
 			$.ajaxSetup({ cache: false });
 			$('#search').keyup(function () {
-				console.log('search started')
 				$('#results').html('');
 				var searchField = $('#search').val();
 				if (searchField.length <= 3) { return; }
@@ -455,8 +454,9 @@
 			function succ(data, textStatus, jqXHR) {
 				console.log(data)
 				$('#results').html(data)
+				$('#results').show()
 			}
-			
+
 
 		});
 	</script>
@@ -465,12 +465,12 @@
 			<a href="/">
 				<div class="logo"></div>
 			</a>
-			<div class="searchbox" style="position:relative;z-index:100000" >
+			<div class="searchbox" style="position:relative;z-index:0">
 				<form class="searchform" action="/search" method="get">
 					{% csrf_token %}
 					<input class="searchinput" name="q" maxlength="100" placeholder="Search" value="" id="search">
 					<input class="searchsubmit" type="submit" value="">
-					<ul id="results" class="results">
+					<ul id="results" class="results" >
 
 					</ul>
 				</form>
@@ -594,9 +594,11 @@
 			}
 		}
 	</script>
+	
 	{%block slider%}
 
 	{%endblock%}
+	
 	<div class="line"></div>
 	<script>
 		var slide = document.getElementById('slide');

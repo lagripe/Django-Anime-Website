@@ -793,13 +793,7 @@ overflow:hidden;
 body
 {
 	margin: 0px;
-    #background-image: url(
-	line.png);
-    #background-repeat: repeat-x
-    #background-position: left
-	top;
-	/* background-image: url(ah-wp-1080.jpg); */ */
-	background-position: bottom;
+	/* background-image: url(ah-wp-1080.jpg); */ 
 }
 a{
 color: #282828;

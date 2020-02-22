@@ -28,6 +28,11 @@ urlpatterns = [
     path('anime-series/<int:page>',anime_list_pagination),
     path('popular/',anime_list),
     path('popular/<int:page>',anime_list_pagination),
+    path('anime-movies',anime_list),
     path('random/',random),
-    path('api/search/',search)
+    path('api/search/',search),
+    
+    
+    path('api/latest/',Latest)
+    
 ]

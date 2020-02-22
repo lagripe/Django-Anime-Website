@@ -13,6 +13,13 @@ GlobalAnime - {{header}}
     <div class="slidermain4" id="slide">
         <div class="centerf">
             <div class="centerf2">
+                {% for banner in banners %}
+                <a class="an" href="/detail/{{banner.slug}}-{{banner.id_api}}" title="{{banner.name}}"><img
+                    class="sliderimg" src="{{banner.bannerImage}}"></a>
+                {%endfor%}
+                <!--
+
+                
                 <a class="an" href="https://animeheaven.ru/detail/black-clover-tv.28835" title="Black Clover (TV)"><img
                         class="sliderimg" src="https://static.animecdn.xyz/static/images/black-clover.jpg"></a>
                 <a class="an" href="https://animeheaven.ru/detail/toaru-majutsu-no-index-iii-sub.69455"
@@ -56,6 +63,7 @@ GlobalAnime - {{header}}
                 <a class="an" href="https://animeheaven.ru/detail/tejina-senpai-sub.70301"
                     title="Tejina-senpai (Sub)"><img class="sliderimg"
                         src="https://static.animecdn.xyz/media/imagesv2/2019/07/tejina-senpai-sub-extra-cover.png"></a>
+                -->
             </div>
         </div>
     </div>

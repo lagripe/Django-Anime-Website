@@ -784,11 +784,13 @@ overflow:hidden;
 */
 body
 {
-	margin: 0px;
+    margin: 0px;
+    /*
     background-image: url(
 	line.png);
     background-repeat: repeat-x;
-	background-position: bottom;
+    background-position: bottom;
+    */
 }
 a{
 color: #282828;

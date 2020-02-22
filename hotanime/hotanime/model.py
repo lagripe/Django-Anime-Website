@@ -82,6 +82,7 @@ class Engine():
             # get episode
             mycursor.execute("SELECT * FROM episodes WHERE id = %s",[episode])
             response['episode']     =   mycursor.fetchone()
+            
             response['episode']['links'] = [{'server':i+1,'link':link} for i,link in enumerate(response['episode']['links'].split('|'))]
             try:
                 response['episode']['episodeDisplay'] = int(response['episode']['episode'])
@@ -92,18 +93,20 @@ class Engine():
             id_anime = response['episode']['id_anime']
             mycursor.execute("SELECT id_api,slug,name,id FROM animes WHERE id = %s",[id_anime])
             response['anime_url']  = mycursor.fetchone()
+            
             index_last,index_next = (None,None)
             # get last episode
             if current_index > 1:
-                mycursor.execute("SELECT episode FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index - 1,id_anime])
-                index_last = mycursor.fetchone()['episode']
+                mycursor.execute("SELECT id FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index - 1,id_anime])
+                index_last = mycursor.fetchone()['id']
+            
             # get next episode
-            mycursor.execute("SELECT episode FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index + 1,id_anime])
+            mycursor.execute("SELECT id FROM episodes WHERE index_ep = %s AND id_anime = %s",[current_index + 1,id_anime])
             #print(mycursor.fetchone())
             #print('-----------{}'.format(rowscount))
             rows = mycursor.fetchall()
             if len(rows) >= 1:
-                index_next = rows[0]['episode']
+                index_next = rows[0]['id']
             response['last'] = index_last
             response['next'] = index_next
             response['loweredName'] = ' '.join(response['anime_url']['slug'].split('-'))
@@ -117,8 +120,6 @@ class Engine():
             mycursor.execute("SELECT * FROM animes order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
             print('--------------- {}'.format(mycursor._executed))
             return mycursor.fetchall()
-        
-        
     def get_dubbed_anime(self,page):
         if page > 0:
             page -= 1
@@ -154,7 +155,14 @@ class Engine():
             mycursor.execute("SELECT * FROM animes order by popularity DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
             print('--------------- {}'.format(mycursor._executed))
             return mycursor.fetchall()   
-        
+    def get_movies(self,page):
+        if page > 0:
+            page -= 1
+        offset = page * self.ITEM_PER_PAGE
+        with self.open_db_connection() as mycursor:
+            mycursor.execute("SELECT * FROM animes WHERE t='m' order by popularity DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
+            print('--------------- {}'.format(mycursor._executed))
+            return mycursor.fetchall()   
     def get_total_pages(self,type):
         with self.open_db_connection() as mycursor:
             if type == 'animes':
@@ -162,9 +170,11 @@ class Engine():
             elif type == 'dubbed':
                 mycursor.execute("SELECT count(*) as count FROM animes WHERE name LIKE '%(Dub)'")
             elif type == 'tv':
-                mycursor.execute("SELECT count(*) as count FROM animes WHERE format = 'TV' or format = 'TV_SHORT'")
+                mycursor.execute("SELECT count(*) as count FROM animes WHERE t = 't'")
             elif type == 'popular':
                 mycursor.execute("SELECT count(*) as count FROM animes")
+            elif type == 'movies':
+                mycursor.execute("SELECT count(*) as count FROM animes WHERE t = 'm'")
                 
             return ceil(mycursor.fetchone()['count'] / self.ITEM_PER_PAGE)
 
@@ -188,7 +198,7 @@ class Engine():
                             for anime in animes]
             ids = ['\''+anime['id']+'\'' for anime in sorted(scores,key=lambda i:i['score'],reverse=True)[:self.SIMILAR_PER_PAGE]]
             cursor.execute("SELECT name,slug,id_api,coverImage FROM animes WHERE id in ({})".format(','.join(ids)))
-            return cursor.fetchall()
+            return cursor.fetchall()[::-1]
     def search(self,keyword):
         
         keyword = ' '.join([word for word in keyword.lower().split('-') if word not in self.stop_words])
@@ -201,3 +211,24 @@ class Engine():
             ids = ['\''+anime['id']+'\'' for anime in sorted(scores,key=lambda i:i['score'],reverse=True)[:self.SEARCH_ITEMS]]
             cursor.execute("SELECT name,slug,id_api,coverImage FROM animes WHERE id in ({})".format(','.join(ids)))
             return cursor.fetchall()
+    def get_banner(self,max=5):
+        with self.open_db_connection() as cursor:
+            cursor.execute("""SELECT slug,name,id_api,bannerImage 
+                           FROM anime_db.animes 
+                           WHERE status = 'RELEASING' AND bannerImage LIKE 'https:%' ORDER BY popularity DESC LIMIT %s""",[max])
+            return cursor.fetchall()
+    
+       
+        
+    '''
+
+    Mobile API methods
+
+    '''
+    def get_latest_episodes_mob(self,max=40):
+        with self.open_db_connection() as cursor:
+            # DB View : get_latest_episodes
+            cursor.execute("select * from get_latest_episodes LIMIT %s",[max])
+            episodes = self.concatenate_genres(cursor.fetchall())
+            return episodes
+    

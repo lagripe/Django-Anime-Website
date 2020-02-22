@@ -9,7 +9,9 @@ engine = Engine()
 def index(request):
     episodes = engine.get_episode_homePage(max=40)
     ongoing = engine.get_onGoing(max=30)
-    return render(request, "index.html", {'episodes': episodes, 'onGoing': ongoing,'header':'Watch Anime Online Free | globalanime.com'})
+    banners = engine.get_banner(max=5)
+    print(banners)
+    return render(request, "index.html", {'episodes': episodes, 'onGoing': ongoing,'header':'Watch Anime Online Free | globalanime.com','banners':banners})
 
 
 def detail(request, slug):
@@ -43,6 +45,7 @@ def watch(request,episode):
     try:
         episode = int(episode)
         response = engine.get_episode_servers(episode)
+        print(response)
         #return JsonResponse(response)
         return render(request, "watch.html",
                     {'episode': response['episode'],
@@ -51,7 +54,8 @@ def watch(request,episode):
                     'next':response['next'],
                     'loweredName':response['loweredName']
                     })
-    except:
+    except Exception as z:
+        print(z.args)
         return HttpResponse(content="")
     
 
@@ -76,6 +80,9 @@ def anime_list(request):
         header= 'Watch Anime Series'
         
     if request.META['PATH_INFO'].__contains__('anime-movies'):
+        animes = engine.get_movies(page=0)
+        pages = engine.get_total_pages(type='movies')
+        path = 'anime-movies'
         header= 'Watch Anime Movies'
     if request.META['PATH_INFO'].__contains__('popular'):
         animes = engine.get_popular(page=0)
@@ -149,3 +156,13 @@ def search(request):
         pass
     #print(context['results'])
     return render(request,"search_response.html",context)
+
+
+    
+'''
+
+Mobile API 
+
+'''
+def Latest(request):
+    return JsonResponse({'latest':engine.get_latest_episodes_mob()})
