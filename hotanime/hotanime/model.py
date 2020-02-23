@@ -137,16 +137,6 @@ class Engine():
             mycursor.execute("SELECT * FROM animes WHERE format = 'TV' or format = 'TV_SHORT' order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
             print('--------------- {}'.format(mycursor._executed))
             return mycursor.fetchall()
-    '''
-    def get_ongoing(self,page):
-        if page > 0:
-            page -= 1
-        offset = page * self.ITEM_PER_PAGE
-        with self.open_db_connection() as mycursor:
-            mycursor.execute("SELECT * FROM animes  WHERE status = \'RELEASING\' order by start_date DESC LIMIT %s,%s",[offset,self.ITEM_PER_PAGE])
-            print('--------------- {}'.format(mycursor._executed))
-            return mycursor.fetchall()
-    '''
     def get_popular(self,page):
         if page > 0:
             page -= 1
