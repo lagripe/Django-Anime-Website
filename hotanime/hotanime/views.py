@@ -156,9 +156,6 @@ def search(request):
         pass
     #print(context['results'])
     return render(request,"search_response.html",context)
-
-
-    
 '''
 
 Mobile API 
